@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
-import Axios from 'axios';
+import Axios, { AxiosResponse } from 'axios';
+import data from '../../data/repos.json';
 import { Repo } from '../models/Repo';
 
 export const repos = Router();
@@ -8,12 +9,14 @@ repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
   res.header('Content-Type', 'application/json');
 
-  let response: Repo[] = [];
+  let response: Repo[] = data ? data : [];
+
+  // fetch repo data from github and aggregate with local repo data
   try {
-    const apiResponse = await Axios.get(
+    const apiRequest: AxiosResponse = await Axios.get(
       'https://api.github.com/users/silverorange/repos'
     );
-    response = apiResponse.data;
+    response = [...response, ...apiRequest.data];
   } catch (error) {
     response = [];
   }
