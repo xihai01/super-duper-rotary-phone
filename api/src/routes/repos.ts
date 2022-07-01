@@ -9,17 +9,24 @@ repos.get('/', async (_: Request, res: Response) => {
   res.header('Cache-Control', 'no-store');
   res.header('Content-Type', 'application/json');
 
-  let response: Repo[] = data ? data : [];
-
+  let repositories: Repo[] = data ? data : [];
   // fetch repo data from github and aggregate with local repo data
   try {
     const apiRequest: AxiosResponse = await Axios.get(
       'https://api.github.com/users/silverorange/repos'
     );
-    response = [...response, ...apiRequest.data];
+    repositories = [...repositories, ...apiRequest.data];
   } catch (error) {
-    response = [];
+    repositories = [];
   }
+
+  // only respond with repos where fork is set to false
+  const response: Repo[] = [];
+  repositories.forEach((repo) => {
+    if (repo.fork === false) {
+      response.push(repo);
+    }
+  });
 
   res.status(200);
 
