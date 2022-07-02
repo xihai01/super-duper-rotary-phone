@@ -28,6 +28,17 @@ repos.get('/', async (_: Request, res: Response) => {
     }
   });
 
+  // respond with repos sorted in reverse chrono order
+  response.sort((a, b) => {
+    if (new Date(a.created_at) > new Date(b.created_at)) {
+      return -1;
+    } else if (new Date(a.created_at) < new Date(b.created_at)) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
   res.status(200);
 
   // TODO: See README.md Task (A). Return repo data here. You’ve got this!
