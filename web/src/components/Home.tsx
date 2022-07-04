@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import moment from 'moment';
+
+import '../App.css';
 
 export function Home() {
   // use state goes here
@@ -29,7 +32,7 @@ export function Home() {
                 <h2>{data.name}</h2>
               </Link>
               <ul>
-                <li>{data.created_at}</li>
+                <li>{`${moment(data.created_at)}`}</li>
                 <li>{data.description ? data.description : 'no desc'}</li>
                 <li>{data.language ? data.language : 'no language'}</li>
                 <li>{data.forks_count ? data.forks_count : 'unavilable'}</li>
@@ -62,7 +65,7 @@ export function Home() {
   }, [filter, showListOfRepo]);
 
   return (
-    <div>
+    <div className="home">
       <button onClick={() => handleClick('All')}>All</button>
       <button onClick={() => handleClick('PHP')}>PHP</button>
       <button onClick={() => handleClick('TypeScript')}>TypeScript</button>

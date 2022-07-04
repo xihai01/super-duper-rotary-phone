@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import axios from 'axios';
+import moment from 'moment';
+
+import '../App.css';
 
 export function Repository() {
   const { name } = useParams();
@@ -30,23 +33,23 @@ export function Repository() {
   }, [name]);
 
   return (
-    <div>
+    <div className="repository">
       <h1>Most Recent Commit</h1>
       <ul>
         <li>
           {commits.length === 0
             ? 'No name available'
-            : commits[0].commit.author.name}
+            : `Author: ${commits[0].commit.author.name}`}
         </li>
         <li>
           {commits.length === 0
             ? 'No author available'
-            : commits[0].commit.author.date}
+            : `Date: ${moment(commits[0].commit.author.date)}`}
         </li>
         <li>
           {commits.length === 0
             ? 'No commit message available'
-            : commits[0].commit.message}
+            : `Message: ${commits[0].commit.message}`}
         </li>
       </ul>
       <br />
