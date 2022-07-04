@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import moment from 'moment';
@@ -6,7 +6,6 @@ import moment from 'moment';
 import '../App.css';
 
 export function Home() {
-  // use state goes here
   const [repo, setRepo] = useState<any[]>([]);
   const [listOfRepo, setListOfRepo] = useState<any[]>([]);
   const [filter, setFilter] = useState<{ filterBy: string }>({
@@ -46,7 +45,6 @@ export function Home() {
     [repo]
   );
 
-  // use efffect goes here
   useEffect(() => {
     // fetch repo data
     const fetchRepo = async () => {
@@ -61,6 +59,7 @@ export function Home() {
   }, [navigate]);
 
   useEffect(() => {
+    // store a filter list of repo based on language
     setListOfRepo(showListOfRepo(filter));
   }, [filter, showListOfRepo]);
 

@@ -8,11 +8,9 @@ import '../App.css';
 
 export function Repository() {
   const { name } = useParams();
-  // use state goes here
   const [commits, setCommits] = useState<any[]>([]);
   const [readMe, setReadMe] = useState<string>('');
 
-  // use efffect goes here
   useEffect(() => {
     const fetchCommits = async () => {
       try {
