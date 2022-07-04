@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 export function Home() {
@@ -9,6 +9,8 @@ export function Home() {
   const [filter, setFilter] = useState<{ filterBy: string }>({
     filterBy: 'All',
   });
+
+  const navigate = useNavigate();
 
   // handle repo list filtering by language
   const handleClick = (filterWord: string) => {
@@ -49,11 +51,11 @@ export function Home() {
         const { data } = await axios.get('/repos');
         setRepo(data);
       } catch (error) {
-        console.log(error); // -> remove from production; replace with server error page
+        navigate('/error');
       }
     };
     fetchRepo();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
     setListOfRepo(showListOfRepo(filter));

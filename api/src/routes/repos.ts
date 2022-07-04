@@ -15,7 +15,9 @@ repos.get('/', async (_: Request, res: Response) => {
     const apiRequest: AxiosResponse = await Axios.get(
       'https://api.github.com/users/silverorange/repos'
     );
-    const localData: string = await readFile('./data/repos.json', { encoding: 'utf8' });
+    const localData: string = await readFile('./data/repos.json', {
+      encoding: 'utf8',
+    });
     repositories = [...apiRequest.data, ...JSON.parse(localData)];
   } catch (error) {
     repositories = [];
