@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 export function Home() {
@@ -22,7 +23,9 @@ export function Home() {
         if (data.language === filterBy || filterBy === 'All') {
           repositories.push(
             <article key={data.id}>
-              <h2>{data.name}</h2>
+              <Link to={`/repo/${data.name}`}>
+                <h2>{data.name}</h2>
+              </Link>
               <ul>
                 <li>{data.created_at}</li>
                 <li>{data.description ? data.description : 'no desc'}</li>
